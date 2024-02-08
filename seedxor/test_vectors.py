@@ -1,8 +1,6 @@
-from implementation import hamming_backup
+from seedxor.implementation import hamming_backup
 
-
-if __name__ == '__main__':
-
+def test():
     # here, X represents the 'original secret' seed phrase.
     X = 'useless theme rescue solve stable idea render cotton run round fiscal push correct fish frown miss endless floor nasty wild squirrel long process vacant'
 
@@ -29,3 +27,6 @@ if __name__ == '__main__':
     assert(hamming_backup(A, C) == (B, X))
 
     print('...tests completed.')
+
+if __name__ == '__main__':
+    test()
