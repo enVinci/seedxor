@@ -15,7 +15,13 @@ There are two Python files here:
 - `implementation.py` contains the reference implementation.
 - `test_vectors.py` checks the correctness of the implementation.
 
+### install
+python3 -m pip install .
 
+sudo cp ./seedxor_completion /etc/bash_completion.d/
+
+### uninstall
+pip3 uninstall seedxor
 
 [1]: https://cp4space.hatsya.com/2021/09/10/hamming-backups-a-2-of-3-variant-of-seedxor/
 [2]: https://pypi.org/project/mnemonic/

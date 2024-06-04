@@ -1,5 +1,5 @@
 from seedxor.implementation import hamming_backup
-from seedxor.test_vectors import test
+from seedxor.test_vectors import test12, test15, test18, test24
 import argparse
 
 def end(A, B, C, X):
@@ -14,7 +14,7 @@ def end(A, B, C, X):
     exit(0)
 
 def main():
-    parser = argparse.ArgumentParser('Create the shards or restore an original secret mnemonic seed phrase using 2-of-3 variant of SeedXOR (Hamming Backup).')
+    parser = argparse.ArgumentParser('Create the shards(AB,BC,AC) or restore an original secret mnemonic seedphrase(X) using 2-of-3 variant of SeedXOR (Hamming Backup).')
     parser.add_argument("-A", "--first", default=None, action="store", help="First shard (-A '...')")
     parser.add_argument("-B", "--second", default=None, action="store", help="Second shard (-B '...')")
     parser.add_argument("-C", "--third", default=None, action="store", help="Third shard (-C '...')")
@@ -24,7 +24,10 @@ def main():
     args = parser.parse_args()
 
     if args.test:
-        test()
+        test12()
+        test15()
+        test18()
+        test24()
         exit(0)
 
     A = args.first

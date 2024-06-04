@@ -21,7 +21,7 @@ def split_mnemonic(words):
     '''
 
     # extract the entropy and check it:
-    ent = list(english.to_entropy(words))
+    ent = list(english.to_entropy(words.split()))
 
     n = len(ent) >> 1
 
@@ -90,7 +90,7 @@ def hamming_backup(X, A):
     hamming_backup(C, B) returns (A, X)
     hamming_backup(A, C) returns (B, X)
     '''
-
+    assert len(X.split()) == len(A.split()), "Input arrays length do not match. Check words given in program arguments."
     x1, x2 = split_mnemonic(X)
     a1, a2 = split_mnemonic(A)
 
