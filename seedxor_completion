@@ -2051,21 +2051,33 @@ zone
 zoo
 )
 
-# Custom completion function for 'seedxor' command
+[ $(printf '%s\n' "${BIP39_WORDS[@]}" | wc -w) -eq 2048 ] || echo "W: seedxor word list incomplete!"
+# Completion function for 'seedxor' command
 _bip39() {
     local cur prev opts
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="--first --second --third --secret --version --test -A -B -C -X -v"
+    opts="--first --second --third --secret -A -B -C -X -v --version --test --help"
+    bip39_opts="--first --second --third --secret -A -B -C -X"
 
     if [[ "${cur}" == -* ]]; then
         COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
         return 0
-    elif [[ "${prev}" == "-A" ]] || [[ "${prev}" == "--first" ]] || [[ "${prev}" == "-B" ]] ||[[ "${prev}" == "--second" ]] || [[ "${prev}" == "-C" ]] || [[ "${prev}" == "--third" ]] || [[ "${prev}" == "-X" ]] || [[ "${prev}" == "--secret" ]]; then
-        COMPREPLY=($(compgen -W "${BIP39_WORDS[*]}" -- "${cur}"))
-        return 0
     fi
+
+    # Iterate backwards over COMP_WORDS
+    for ((i=COMP_CWORD-1; i>=0; i--)); do
+        # If we find a word that starts with '--' or '-', check if it's in 'opts'
+        if [[ "${COMP_WORDS[i]}" == --* ]] || [[ "${COMP_WORDS[i]}" == -* ]]; then
+                # If we find an option in 'bip39_opts', suggest a bip39 word
+                if [[ " ${bip39_opts} " =~ " ${COMP_WORDS[i]} " ]]; then
+                    COMPREPLY=($(compgen -W "${BIP39_WORDS[*]}" -- "${cur}"))
+                    return 0
+                fi
+                break
+        fi
+    done
 }
 
 complete -F _bip39 seedxor
